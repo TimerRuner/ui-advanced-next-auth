@@ -1,8 +1,4 @@
-export interface IUser {
-    id: string
-    email: string
-    isActivate: boolean
-}
+import {IUser} from "../../models/IUser";
 
 export interface IAuthState {
     user: IUser
@@ -13,7 +9,8 @@ export interface IAuthState {
 export enum AuthActionConst {
     SET_AUTH = "SET_AUTH",
     SET_USER = "SET_USER",
-    SET_LOADING = "SET_LOADING"
+    SET_LOADING = "SET_LOADING",
+    SET_ERROR = "SET_ERROR"
 }
 
 export interface AuthSetAuth {
@@ -31,4 +28,9 @@ export interface AuthSetLoading {
     payload: boolean
 }
 
-export type AuthActionTypes = AuthSetAuth | AuthSetLoading | AuthSetUser
+export interface AuthSetError{
+    type: AuthActionConst.SET_ERROR,
+    payload: string
+}
+
+export type AuthActionTypes = AuthSetAuth | AuthSetLoading | AuthSetUser | AuthSetError
