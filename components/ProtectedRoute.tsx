@@ -11,7 +11,6 @@ const ProtectedRoute: FC<IProtectedRoute> = ({children}) => {
     const router = useRouter()
     const {checkAuth} = useActions()
     const {user} = useTypeSelector((store) => store.auth)
-
     useEffect(() => {
         if(localStorage.getItem("token")) {
             checkAuth()
@@ -19,7 +18,7 @@ const ProtectedRoute: FC<IProtectedRoute> = ({children}) => {
     }, [])
 
     useEffect(() => {
-        if(!!user) {
+        if(!Object.keys(user).length) {
             router.push("/singup")
         }
     }, [user, router.pathname])

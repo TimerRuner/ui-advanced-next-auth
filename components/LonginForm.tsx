@@ -1,10 +1,20 @@
-import React, { FC, useState } from "react"
+import React, {FC, useEffect, useState} from "react"
 import {useTypeSelector} from "../hooks/useSelector";
 import {useActions} from "../hooks/actionCreator";
+import {useRouter} from "next/router";
 
 const LoginForm: FC = () => {
   const [form, setForm] = useState({email: "", password: ""})
   const {login, registration} = useActions()
+  const router = useRouter()
+  const {isAuth} = useTypeSelector(store => store.auth)
+
+  useEffect(() => {
+      if(isAuth){
+          router.push('/')
+      }
+  }, [isAuth])
+
     return (
         <div>
             <input

@@ -31,7 +31,7 @@ export const registration = (email: string, password: string) => {
         try {
             dispatch({type: AuthActionConst.SET_LOADING, payload: true})
 
-            const response = await AuthService.login(email, password)
+            const response = await AuthService.registration(email, password)
             localStorage.setItem("token", response.data.accessToken)
 
             dispatch({type: AuthActionConst.SET_AUTH, payload: true})
