@@ -3,17 +3,25 @@ import type { AppProps } from 'next/app'
 import {wrapper} from "../store";
 import {useRouter} from "next/router";
 import ProtectedRoute from "../components/ProtectedRoute";
+import {ChakraProvider} from "@chakra-ui/react";
+import {Layout} from "../components/Layout";
 
-const publicRoutes = ["/signup"]
+const publicRoutes = ["/singup"]
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
-  return publicRoutes.includes(router.pathname) ? (
-     <Component {...pageProps} />
-  ) : (
-      <ProtectedRoute>
-        <Component {...pageProps} />
-      </ProtectedRoute>
+  return (
+      <ChakraProvider>
+          {publicRoutes.includes(router.pathname) ? (
+              <Component {...pageProps} />
+          ) : (
+              <ProtectedRoute>
+                  <Layout>
+                      <Component {...pageProps} />
+                  </Layout>
+              </ProtectedRoute>
+          )}
+      </ChakraProvider>
   )
 }
 
