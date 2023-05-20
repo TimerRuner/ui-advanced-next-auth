@@ -26,6 +26,26 @@ export const login = (email: string, password: string) => {
     }
 }
 
+export const loginGoogle = () => {
+    return async (dispatch: Dispatch<AuthActionTypes>) => {
+        try {
+            dispatch({type: AuthActionConst.SET_LOADING, payload: true})
+
+            const response = await AuthService.loginGoogle()
+            localStorage.setItem("token", response.data.accessToken)
+
+            dispatch({type: AuthActionConst.SET_AUTH, payload: true})
+
+            dispatch({type: AuthActionConst.SET_USER, payload: response.data.user})
+
+        } catch (error) {
+            dispatch({type: AuthActionConst.SET_ERROR, payload: String(error)})
+        } finally {
+            dispatch({type: AuthActionConst.SET_LOADING, payload: false})
+        }
+    }
+}
+
 export const registration = (email: string, password: string) => {
     return async (dispatch: Dispatch<AuthActionTypes>) => {
         try {

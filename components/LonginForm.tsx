@@ -7,7 +7,7 @@ import {Text, Box, Button, Flex, FormControl, FormLabel, Input} from "@chakra-ui
 
 const LoginForm: FC = () => {
   const [form, setForm] = useState({email: "", password: ""})
-  const {login, registration} = useActions()
+  const {login, registration, loginGoogle} = useActions()
   const router = useRouter()
   const {isAuth} = useTypeSelector(store => store.auth)
   const [formType, setFormType] = useState("")
@@ -65,6 +65,9 @@ const LoginForm: FC = () => {
                                     <Button type="submit" minW="150px" onClick={() => setFormType("registration")}>
                                         Registration
                                     </Button>
+                                </Flex>
+                                <Flex gap="15px" mt={5}>
+                                    <Button minW="150px" onClick={() => loginGoogle()}>Google</Button>
                                 </Flex>
                             </Flex>
                         </Form>
