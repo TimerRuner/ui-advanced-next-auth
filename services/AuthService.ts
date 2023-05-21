@@ -21,7 +21,4 @@ export default class AuthService {
         return $api.post("/auth/logout", {}, { withCredentials: true })
     }
 
-    static async loginGoogle(): Promise<AxiosResponse<AuthResponse>> {
-        return $api.get<AuthResponse>("/auth/google",  { withCredentials: true })
-    }
 }

@@ -3,7 +3,9 @@ import {useTypeSelector} from "../hooks/useSelector";
 import {useActions} from "../hooks/actionCreator";
 import {useRouter} from "next/router";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {Text, Box, Button, Flex, FormControl, FormLabel, Input} from "@chakra-ui/react";
+import {Text, Box, Button, Flex, FormControl, FormLabel, Input, Link} from "@chakra-ui/react";
+import Cookies from 'js-cookie';
+import getGoogleUrl from "../utils/getGoogleUrl";
 
 const LoginForm: FC = () => {
   const [form, setForm] = useState({email: "", password: ""})
@@ -16,6 +18,19 @@ const LoginForm: FC = () => {
           router.push('/')
       }
   }, [isAuth])
+
+  useEffect(() => {
+      const refreshToken = localStorage.getItem("token")
+
+      const data = Cookies.get("user")
+      const user = JSON.parse(data || "{}")
+      if(user?.accessToken || user?.user){
+          loginGoogle(user.accessToken, user.user)
+      }
+      return () => {
+          if(!refreshToken) return Cookies.remove("user")
+      }
+  }, [])
 
     const validation = (values: {email: string, password: string}) => {
         const errors: {email?: string, password?: string} = {};
@@ -66,9 +81,9 @@ const LoginForm: FC = () => {
                                         Registration
                                     </Button>
                                 </Flex>
-                                <Flex gap="15px" mt={5}>
-                                    <Button minW="150px" onClick={() => loginGoogle()}>Google</Button>
-                                </Flex>
+                                <Button gap="15px" mt={5} onClick={() => router.push(getGoogleUrl())}>
+                                    Google
+                                </Button>
                             </Flex>
                         </Form>
                     </Formik>
